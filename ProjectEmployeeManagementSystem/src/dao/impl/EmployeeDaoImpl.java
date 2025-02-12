@@ -8,14 +8,22 @@ import java.sql.SQLException;
 import model.DepartmentModel;
 import model.EmployeeModel;
 
-public class EmployeeDaoImpl implements EmployeeDao{
+public class EmployeeDaoImpl implements EmployeeDao {
+
     DatabaseConnection connection = DatabaseConnection.getInstance();
-    
+
     @Override
     public boolean saveEmployee(EmployeeModel em) {
         boolean status = false;
-        String query = "INSERT INTO employee(``) VALUES()";
-        if(connection.iudQueryBuilder(query) > 0){
+        String query = "INSERT INTO employee"
+                + "(`first_name`, `middle_name`, `last_name`, `dob`,"
+                + " `join_date`, `gender`, `department_id`, `designation`) VALUES("
+                + "'" + em.getFirstName() + "', '" + em.getMiddleName() + "', "
+                + "'" + em.getLastName() + "', '" + em.getDob() + "', "
+                + "'" + em.getJoinDate() + "','" + em.getGender() + "', "
+                + "" + em.getDepartment().getDepartmentId() + ","
+                + "'" + em.getDesignation() + "')";
+        if (connection.iudQueryBuilder(query) > 0) {
             status = true;
         }
         return status;
@@ -27,7 +35,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
         ResultSet data = connection.selectQueryBuilder(query);
         DepartmentModel dm = new DepartmentModel();
         try {
-            while(data.next()){
+            while (data.next()) {
                 em.setFirstName(data.getString("first_name"));
                 em.setMiddleName(data.getString("middle_name"));
                 em.setLastName(data.getString("last_name"));
@@ -47,7 +55,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
         String query = "SELECT * FROM employee";
         ResultSet data = connection.selectQueryBuilder(query);
         try {
-            while(data.next()){
+            while (data.next()) {
                 EmployeeModel em = new EmployeeModel();
                 DepartmentModel dm = new DepartmentModel();
                 em.setFirstName(data.getString("first_name"));
@@ -73,5 +81,5 @@ public class EmployeeDaoImpl implements EmployeeDao{
     public boolean deleteEmployee(EmployeeModel em) {
         return true;
     }
-    
+
 }
