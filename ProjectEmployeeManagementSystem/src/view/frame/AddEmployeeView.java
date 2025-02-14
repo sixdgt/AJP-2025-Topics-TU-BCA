@@ -1,13 +1,16 @@
 package view.frame;
 
+import controller.DepartmentController;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import model.DepartmentModel;
 
 public class AddEmployeeView extends JInternalFrame implements ActionListener{
     private final JLabel lbl_first_name, lbl_middle_name, lbl_last_name, 
@@ -15,8 +18,11 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener{
     private final JTextField txt_first_name, txt_middle_name, txt_last_name, 
             txt_join_date, txt_dob, txt_designation;
     private final JButton btn_add, btn_reset;
-    private final JComboBox cmb_gender, cmb_department;
+    private final JComboBox cmb_gender;
+    private final JComboBox<DepartmentModel> cmb_department;
+    public DepartmentController dc;
     public AddEmployeeView(){
+        
         lbl_first_name = new JLabel("Enter First Name: ");
         lbl_middle_name = new JLabel("Enter Middle Name: ");
         lbl_last_name = new JLabel("Enter Last Name: ");
@@ -34,10 +40,15 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener{
         for (String data : gender) {
             cmb_gender.addItem(data);
         }
-        
         txt_join_date = new JTextField();
-        Object department[][] = {{1, "IT Department"}, {2, "Admin"}, {3, "HR"}};
-        cmb_department = new JComboBox(department);
+        
+        dc = new DepartmentController();
+        ArrayList<DepartmentModel> deparments = dc.getDepartmentList(); // gives ArrayList
+        cmb_department = new JComboBox(); // here our combobox is of type DepartmentModel
+        for(DepartmentModel department: deparments){//implementing advance for loop to get object
+            cmb_department.addItem(department); // adding all DepartmentModel object to Combobox
+        }
+        
         txt_designation = new JTextField();
         btn_add = new JButton("Add User");
         btn_reset = new JButton("Reset");

@@ -28,4 +28,9 @@ public class DepartmentModel {
     public String getDepartmentName(){
         return this.department_name;
     }
+    // this method will convert the DepartmentModel object to string
+    @Override
+    public String toString(){
+        return this.department_name;
+    }
 }
