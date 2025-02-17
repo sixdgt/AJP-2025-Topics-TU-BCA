@@ -1,6 +1,7 @@
 package view.frame;
 
 import controller.DepartmentController;
+import controller.EmployeeController;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.DepartmentModel;
 
@@ -21,6 +23,7 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener{
     private final JComboBox cmb_gender;
     private final JComboBox<DepartmentModel> cmb_department;
     public DepartmentController dc;
+    public EmployeeController ec;
     public AddEmployeeView(){
         
         lbl_first_name = new JLabel("Enter First Name: ");
@@ -51,6 +54,7 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener{
         
         txt_designation = new JTextField();
         btn_add = new JButton("Add User");
+        btn_add.addActionListener(this);
         btn_reset = new JButton("Reset");
         setSize(500, 800);
         setTitle("Add User");
@@ -80,5 +84,25 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.btn_add){
+            addEmployee();
+        }
+    }
+    
+    public void addEmployee(){
+        ec = new EmployeeController();
+        ec.first_name = this.txt_first_name.getText();
+        ec.middle_name = this.txt_middle_name.getText();
+        ec.last_name = this.txt_last_name.getText();
+        ec.department = (DepartmentModel)cmb_department.getSelectedItem();
+        ec.gender = cmb_gender.getSelectedItem().toString();
+        ec.join_date = this.txt_join_date.getText();
+        ec.dob = this.txt_dob.getText();
+        ec.designation = this.txt_designation.getText();
+        if(ec.insert(ec)){
+            JOptionPane.showMessageDialog(rootPane, "Added Successfully");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Something went wrong");
+        }
     }
 }

@@ -13,7 +13,7 @@ public class EmployeeController {
     public String gender;
     public String join_date;
     public String dob;
-    public int department_id;
+    public DepartmentModel department;
     public String designation;
     
     EmployeeModel em;
@@ -22,15 +22,13 @@ public class EmployeeController {
     
     public boolean insert(EmployeeController ec){
         boolean status = false;
-        dm = new DepartmentModel();
         em = new EmployeeModel();
         em.setFirstName(ec.first_name);
         em.setMiddleName(ec.middle_name);
         em.setLastName(ec.last_name);
         em.setEmpNo(ec.emp_no);
-        em.setDesignation(ec.designation);
-        dm.setDepartmentId(ec.department_id); // department object
-        em.setDepartment(dm); // department object in employeemodel
+        em.setDesignation(ec.designation); // department object
+        em.setDepartment(ec.department); // department object in employeemodel
         em.setDob(ec.dob);
         em.setGender(ec.gender);
         em.setJoinDate(ec.join_date);
