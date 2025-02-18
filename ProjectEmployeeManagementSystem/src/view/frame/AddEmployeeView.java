@@ -14,18 +14,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.DepartmentModel;
 
-public class AddEmployeeView extends JInternalFrame implements ActionListener{
-    private final JLabel lbl_first_name, lbl_middle_name, lbl_last_name, 
+public class AddEmployeeView extends JInternalFrame implements ActionListener {
+
+    private final JLabel lbl_first_name, lbl_middle_name, lbl_last_name,
             lbl_gender, lbl_join_date, lbl_dob, lbl_department, lbl_designation;
-    private final JTextField txt_first_name, txt_middle_name, txt_last_name, 
+    private final JTextField txt_first_name, txt_middle_name, txt_last_name,
             txt_join_date, txt_dob, txt_designation;
     private final JButton btn_add, btn_reset;
     private final JComboBox cmb_gender;
     private final JComboBox<DepartmentModel> cmb_department;
     public DepartmentController dc;
     public EmployeeController ec;
-    public AddEmployeeView(){
-        
+
+    public AddEmployeeView() {
         lbl_first_name = new JLabel("Enter First Name: ");
         lbl_middle_name = new JLabel("Enter Middle Name: ");
         lbl_last_name = new JLabel("Enter Last Name: ");
@@ -44,14 +45,14 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener{
             cmb_gender.addItem(data);
         }
         txt_join_date = new JTextField();
-        
+
         dc = new DepartmentController();
         ArrayList<DepartmentModel> deparments = dc.getDepartmentList(); // gives ArrayList
         cmb_department = new JComboBox(); // here our combobox is of type DepartmentModel
-        for(DepartmentModel department: deparments){//implementing advance for loop to get object
+        for (DepartmentModel department : deparments) {//implementing advance for loop to get object
             cmb_department.addItem(department); // adding all DepartmentModel object to Combobox
         }
-        
+
         txt_designation = new JTextField();
         btn_add = new JButton("Add User");
         btn_add.addActionListener(this);
@@ -84,22 +85,22 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.btn_add){
+        if (e.getSource() == this.btn_add) {
             addEmployee();
         }
     }
-    
-    public void addEmployee(){
+
+    public void addEmployee() {
         ec = new EmployeeController();
         ec.first_name = this.txt_first_name.getText();
         ec.middle_name = this.txt_middle_name.getText();
         ec.last_name = this.txt_last_name.getText();
-        ec.department = (DepartmentModel)cmb_department.getSelectedItem();
+        ec.department = (DepartmentModel) cmb_department.getSelectedItem();
         ec.gender = cmb_gender.getSelectedItem().toString();
         ec.join_date = this.txt_join_date.getText();
         ec.dob = this.txt_dob.getText();
         ec.designation = this.txt_designation.getText();
-        if(ec.insert(ec)){
+        if (ec.insert(ec)) {
             JOptionPane.showMessageDialog(rootPane, "Added Successfully");
         } else {
             JOptionPane.showMessageDialog(rootPane, "Something went wrong");
