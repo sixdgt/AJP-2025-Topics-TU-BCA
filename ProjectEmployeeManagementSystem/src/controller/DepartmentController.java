@@ -11,8 +11,14 @@ public class DepartmentController {
     public String department_name;
     
     DepartmentDao dd = new DepartmentDaoImpl();
-    
+    DepartmentModel dm;
     public ArrayList<DepartmentModel> getDepartmentList(){
         return dd.getAllDepartment();
+    }
+    
+    public DepartmentModel getDepartmentById(int department_id){
+        dm = new DepartmentModel();
+        dm.setDepartmentId(department_id);
+        return dd.getDepartment(dm);
     }
 }

@@ -2,6 +2,7 @@ package controller;
 
 import dao.EmployeeDao;
 import dao.impl.EmployeeDaoImpl;
+import java.util.ArrayList;
 import model.DepartmentModel;
 import model.EmployeeModel;
 
@@ -36,5 +37,9 @@ public class EmployeeController {
             status = true;
         }
         return status;
+    }
+    
+    public ArrayList<EmployeeModel> getEmployeeList(){
+        return ed.getEmployees();
     }
 }

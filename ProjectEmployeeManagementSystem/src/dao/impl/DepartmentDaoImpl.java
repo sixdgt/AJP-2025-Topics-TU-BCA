@@ -18,6 +18,17 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public DepartmentModel getDepartment(DepartmentModel dm) {
+        String query = "SELECT * FROM department WHERE department_id=" + dm.getDepartmentId();
+        ResultSet data = connection.selectQueryBuilder(query);
+        try {
+            while (data.next()) {
+                dm.setDepartmentId(data.getInt("department_id"));
+                dm.setDepartmentCode(data.getString("department_code"));
+                dm.setDepartmentName(data.getString("department_name"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return dm;
     }
 
