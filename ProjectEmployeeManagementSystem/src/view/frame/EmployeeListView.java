@@ -13,10 +13,7 @@ import model.EmployeeModel;
 public final class EmployeeListView extends JInternalFrame {
 
     public EmployeeListView() {
-        Vector<String> columns = loadEmployeeColumn();
-        Vector<Vector<Object>> data = loadEmployeeRowData();
-        
-        DefaultTableModel model = new DefaultTableModel(data, columns);
+        DefaultTableModel model = new DefaultTableModel(loadEmployeeRowData(), loadEmployeeColumn());
         // creating JTable object
         JTable user_list = new JTable(model);
         // to make table scrollable

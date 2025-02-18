@@ -1,0 +1,17 @@
+******** EmployeeViewList Flow ************
+1. EmployeeViewList
+a. Constructor
+b. loadEmployeeColumn()
+c. loadEmployeeRowData()
+
+2. EmployeeController
+a. getEmployeeList()
+
+3. EmployeeDaoImpl
+a. getEmployees()
+
+4. DepartmentController
+a. getDepartmentById()
+
+5. DepartmentDaoImpl
+a. getDepartment()
