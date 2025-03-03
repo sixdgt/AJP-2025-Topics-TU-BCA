@@ -5,6 +5,8 @@ import dao.impl.EmployeeDaoImpl;
 import java.util.ArrayList;
 import model.DepartmentModel;
 import model.EmployeeModel;
+import view.frame.EditEmployeeView;
+import view.frame.MainFrame;
 
 public class EmployeeController {
     public int emp_no;
@@ -41,5 +43,21 @@ public class EmployeeController {
     
     public ArrayList<EmployeeModel> getEmployeeList(){
         return ed.getEmployees();
+    }
+    
+    public void editEmployee(EmployeeController ec){
+        em = new EmployeeModel();
+        em.setEmpNo(ec.emp_no);
+        em = ed.getEmployee(em);
+        ec.first_name = em.getFirstName();
+        ec.middle_name = em.getMiddleName();
+        ec.last_name = em.getLastName();
+        ec.join_date = em.getJoinDate();
+        ec.dob = em.getDob();
+        ec.designation = em.getDesignation();
+        ec.gender = em.getGender();
+        ec.department = em.getDepartment();
+        EditEmployeeView ev = new EditEmployeeView(ec);
+        MainFrame.loadEditEmployeeView(ev);
     }
 }

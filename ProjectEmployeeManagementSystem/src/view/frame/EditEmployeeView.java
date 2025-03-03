@@ -14,19 +14,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.DepartmentModel;
 
-public class AddEmployeeView extends JInternalFrame implements ActionListener {
-
+public class EditEmployeeView extends JInternalFrame implements ActionListener{
     private final JLabel lbl_first_name, lbl_middle_name, lbl_last_name,
             lbl_gender, lbl_join_date, lbl_dob, lbl_department, lbl_designation;
     private final JTextField txt_first_name, txt_middle_name, txt_last_name,
             txt_join_date, txt_dob, txt_designation;
-    private final JButton btn_add, btn_reset;
+    private final JButton btn_update, btn_reset;
     private final JComboBox cmb_gender;
     private final JComboBox<DepartmentModel> cmb_department;
     public DepartmentController dc;
     public EmployeeController ec;
-
-    public AddEmployeeView() {
+    public int emp_id;
+    
+    public EditEmployeeView(EmployeeController ec) {
         lbl_first_name = new JLabel("Enter First Name: ");
         lbl_middle_name = new JLabel("Enter Middle Name: ");
         lbl_last_name = new JLabel("Enter Last Name: ");
@@ -35,17 +35,29 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener {
         lbl_dob = new JLabel("Enter Date of Birth: ");
         lbl_department = new JLabel("Select Department: ");
         lbl_designation = new JLabel("Enter Designation: ");
+        
+        this.emp_id = ec.emp_no;
+        
         txt_first_name = new JTextField();
+        txt_first_name.setText(ec.first_name);
+        
         txt_middle_name = new JTextField();
+        txt_middle_name.setText(ec.middle_name);
+        
         txt_last_name = new JTextField();
+        txt_last_name.setText(ec.last_name);
+        
         txt_dob = new JTextField();
+        txt_dob.setText(ec.dob);
+        
         String gender[] = {"Male", "Female", "Others"};
         cmb_gender = new JComboBox();
         for (String data : gender) {
             cmb_gender.addItem(data);
         }
         txt_join_date = new JTextField();
-
+        txt_join_date.setText(ec.join_date);
+        
         dc = new DepartmentController();
         ArrayList<DepartmentModel> deparments = dc.getDepartmentList(); // gives ArrayList
         cmb_department = new JComboBox(); // here our combobox is of type DepartmentModel
@@ -54,11 +66,13 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener {
         }
 
         txt_designation = new JTextField();
-        btn_add = new JButton("Add User");
-        btn_add.addActionListener(this);
+        txt_designation.setText(ec.designation);
+        
+        btn_update = new JButton("Update User");
+        btn_update.addActionListener(this);
         btn_reset = new JButton("Reset");
         setSize(500, 800);
-        setTitle("Add Employee");
+        setTitle("Update Employee");
         GridLayout gl = new GridLayout(9, 2, 50, 50);
         setLayout(gl);
         add(lbl_first_name);
@@ -77,7 +91,7 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener {
         add(cmb_department);
         add(lbl_designation);
         add(txt_designation);
-        add(btn_add);
+        add(btn_update);
         add(btn_reset);
         setMaximizable(true);
         setClosable(true);
@@ -85,12 +99,12 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btn_add) {
-            addEmployee();
+        if (e.getSource() == this.btn_update) {
+            updateEmployee();
         }
     }
 
-    public void addEmployee() {
+    public void updateEmployee() {
         ec = new EmployeeController();
         ec.first_name = this.txt_first_name.getText();
         ec.middle_name = this.txt_middle_name.getText();

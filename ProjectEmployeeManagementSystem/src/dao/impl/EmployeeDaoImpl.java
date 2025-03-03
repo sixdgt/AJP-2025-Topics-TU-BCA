@@ -32,7 +32,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public EmployeeModel getEmployee(EmployeeModel em) {
-        String query = "SELECT * FROM employee WHERE ID=" + em.getEmpNo();
+        String query = "SELECT * FROM employee WHERE emp_no=" + em.getEmpNo();
         ResultSet data = connection.selectQueryBuilder(query);
         DepartmentModel dm = new DepartmentModel();
         try {
@@ -40,6 +40,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 em.setFirstName(data.getString("first_name"));
                 em.setMiddleName(data.getString("middle_name"));
                 em.setLastName(data.getString("last_name"));
+                em.setJoinDate(data.getString("join_date"));
+                em.setDob(data.getString("dob"));
                 dm.setDepartmentId(data.getInt("department_id"));
                 em.setDepartment(dm);
                 em.setDesignation(data.getString("designation"));

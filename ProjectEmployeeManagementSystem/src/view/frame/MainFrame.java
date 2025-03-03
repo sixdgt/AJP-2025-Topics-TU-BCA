@@ -15,7 +15,7 @@ import view.panel.TopPanel;
 
 public class MainFrame extends JFrame implements ActionListener {
 
-    MainPanel mp;
+    static MainPanel mp;
     BorderLayout bl;
     TopPanel tp;
     BottomPanel bp;
@@ -47,19 +47,25 @@ public class MainFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == tp.employee_list) {
-            this.getUiManager();
+            getUiManager();
             EmployeeListView ul = new EmployeeListView(); // is a JInternalFrame
             ul.setVisible(true);
             mp.add(ul);
         } else if (e.getSource() == tp.employee_add) {
-            this.getUiManager();
+            getUiManager();
             AddEmployeeView au = new AddEmployeeView(); // is a JInternalFrame
             au.setVisible(true);
             mp.add(au);
         }
     }
-
-    public void getUiManager() {
+    
+    public static void loadEditEmployeeView(EditEmployeeView ev){
+        getUiManager();
+        ev.setVisible(true);
+        mp.add(ev);
+    }
+    
+    public static void getUiManager() {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
