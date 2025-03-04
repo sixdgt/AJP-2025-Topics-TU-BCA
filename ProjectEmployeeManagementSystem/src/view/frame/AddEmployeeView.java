@@ -27,7 +27,7 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener {
     public DepartmentController dc;
     public EmployeeController ec;
 
-    public AddEmployeeView() throws PropertyVetoException {
+    public AddEmployeeView(){
         lbl_first_name = new JLabel("Enter First Name: ");
         lbl_middle_name = new JLabel("Enter Middle Name: ");
         lbl_last_name = new JLabel("Enter Last Name: ");
@@ -83,7 +83,6 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener {
         setMaximizable(true);
         setClosable(true);
         setFocusable(true);
-        setSelected(true);
         this.toFront();
     }
 
