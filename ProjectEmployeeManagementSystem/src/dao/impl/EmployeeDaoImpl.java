@@ -82,7 +82,22 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public boolean updateEmployee(EmployeeModel em) {
-        return true;
+        boolean status = false;
+        String query = "UPDATE employee SET "
+                + "first_name= '" + em.getFirstName() + "', "
+                + "middle_name='" + em.getMiddleName() + "', "
+                + "last_name='" + em.getLastName() + "', "
+                + "join_date='" + em.getJoinDate() + "', "
+                + "dob='" + em.getDob() + "', "
+                + "designation='" + em.getDesignation() + "', "
+                + "gender='" + em.getGender() + "', "
+                + "department_id=" + em.getDepartment().getDepartmentId() + ""
+                + " WHERE emp_no=" + em.getEmpNo();
+        System.out.println(query);
+        if(connection.iudQueryBuilder(query) > 0){
+            status = true;
+        }
+        return status;
     }
 
     @Override

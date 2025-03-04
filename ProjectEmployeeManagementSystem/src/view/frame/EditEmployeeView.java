@@ -106,6 +106,7 @@ public class EditEmployeeView extends JInternalFrame implements ActionListener{
 
     public void updateEmployee() {
         ec = new EmployeeController();
+        ec.emp_no = this.emp_id;
         ec.first_name = this.txt_first_name.getText();
         ec.middle_name = this.txt_middle_name.getText();
         ec.last_name = this.txt_last_name.getText();
@@ -114,8 +115,9 @@ public class EditEmployeeView extends JInternalFrame implements ActionListener{
         ec.join_date = this.txt_join_date.getText();
         ec.dob = this.txt_dob.getText();
         ec.designation = this.txt_designation.getText();
-        if (ec.insert(ec)) {
-            JOptionPane.showMessageDialog(rootPane, "Added Successfully");
+        System.out.println(ec.first_name);
+        if (ec.update(ec)) {
+            JOptionPane.showMessageDialog(rootPane, "Updated Successfully");
         } else {
             JOptionPane.showMessageDialog(rootPane, "Something went wrong");
         }

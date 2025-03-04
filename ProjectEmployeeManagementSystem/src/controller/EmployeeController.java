@@ -60,4 +60,20 @@ public class EmployeeController {
         EditEmployeeView ev = new EditEmployeeView(ec);
         MainFrame.loadEditEmployeeView(ev);
     }
+    
+    public boolean update(EmployeeController ec){
+        em = new EmployeeModel();
+        dm = new DepartmentModel();
+        em.setEmpNo(ec.emp_no);
+        em.setFirstName(ec.first_name);
+        em.setMiddleName(ec.middle_name);
+        em.setLastName(ec.last_name);
+        em.setJoinDate(ec.join_date);
+        em.setDob(ec.dob);
+        dm.setDepartmentId(ec.department.getDepartmentId());
+        em.setDepartment(dm);
+        em.setGender(ec.gender);
+        em.setDesignation(ec.designation);
+        return ed.updateEmployee(em);
+    }
 }
