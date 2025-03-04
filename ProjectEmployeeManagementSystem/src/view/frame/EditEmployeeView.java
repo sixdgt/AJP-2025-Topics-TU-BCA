@@ -119,6 +119,8 @@ public class EditEmployeeView extends JInternalFrame implements ActionListener{
         System.out.println(ec.first_name);
         if (ec.update(ec)) {
             JOptionPane.showMessageDialog(rootPane, "Updated Successfully");
+            MainFrame.disposeAllFrame();
+            MainFrame.employeeListView();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Something went wrong");
         }
