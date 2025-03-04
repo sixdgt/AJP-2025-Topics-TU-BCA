@@ -102,7 +102,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public boolean deleteEmployee(EmployeeModel em) {
-        return true;
+        boolean status = false;
+        String query = "DELETE FROM employee WHERE emp_no=" + em.getEmpNo();
+        if(connection.iudQueryBuilder(query) > 0){
+            status = true;
+        }
+        return status;
     }
 
 }

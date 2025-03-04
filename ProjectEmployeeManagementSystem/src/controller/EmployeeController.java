@@ -76,4 +76,14 @@ public class EmployeeController {
         em.setDesignation(ec.designation);
         return ed.updateEmployee(em);
     }
+    
+    public boolean delete(EmployeeController ec){
+        boolean status = false;
+        em = new EmployeeModel();
+        em.setEmpNo(ec.emp_no);
+        if(ed.deleteEmployee(em)){
+            status = true;
+        }
+        return status;
+    }
 }

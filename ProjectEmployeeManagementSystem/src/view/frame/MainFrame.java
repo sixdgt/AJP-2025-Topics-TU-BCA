@@ -47,24 +47,32 @@ public class MainFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == tp.employee_list) {
-            getUiManager();
-            EmployeeListView ul = new EmployeeListView(); // is a JInternalFrame
-            ul.setVisible(true);
-            mp.add(ul);
+            employeeListView();
         } else if (e.getSource() == tp.employee_add) {
-            getUiManager();
-            AddEmployeeView au = new AddEmployeeView(); // is a JInternalFrame
-            au.setVisible(true);
-            mp.add(au);
+            addEmployeeView();
         }
     }
-    
-    public static void loadEditEmployeeView(EditEmployeeView ev){
+
+    public static void employeeListView() {
+        getUiManager();
+        EmployeeListView ul = new EmployeeListView(); // is a JInternalFrame
+        ul.setVisible(true);
+        mp.add(ul);
+    }
+
+    public static void addEmployeeView() {
+        getUiManager();
+        AddEmployeeView au = new AddEmployeeView(); // is a JInternalFrame
+        au.setVisible(true);
+        mp.add(au);
+    }
+
+    public static void loadEditEmployeeView(EditEmployeeView ev) {
         getUiManager();
         ev.setVisible(true);
         mp.add(ev);
     }
-    
+
     public static void getUiManager() {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());

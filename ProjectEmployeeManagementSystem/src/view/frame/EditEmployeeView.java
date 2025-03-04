@@ -95,6 +95,7 @@ public class EditEmployeeView extends JInternalFrame implements ActionListener{
         add(btn_reset);
         setMaximizable(true);
         setClosable(true);
+        setFocusable(true);
     }
 
     @Override

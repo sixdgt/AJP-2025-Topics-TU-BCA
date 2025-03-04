@@ -5,6 +5,7 @@ import controller.EmployeeController;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,7 +27,7 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener {
     public DepartmentController dc;
     public EmployeeController ec;
 
-    public AddEmployeeView() {
+    public AddEmployeeView() throws PropertyVetoException {
         lbl_first_name = new JLabel("Enter First Name: ");
         lbl_middle_name = new JLabel("Enter Middle Name: ");
         lbl_last_name = new JLabel("Enter Last Name: ");
@@ -81,6 +82,9 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener {
         add(btn_reset);
         setMaximizable(true);
         setClosable(true);
+        setFocusable(true);
+        setSelected(true);
+        this.toFront();
     }
 
     @Override
