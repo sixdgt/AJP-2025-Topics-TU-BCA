@@ -5,7 +5,6 @@ import controller.EmployeeController;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -105,6 +104,8 @@ public class AddEmployeeView extends JInternalFrame implements ActionListener {
         ec.designation = this.txt_designation.getText();
         if (ec.insert(ec)) {
             JOptionPane.showMessageDialog(rootPane, "Added Successfully");
+            MainFrame.disposeAllFrame();
+            MainFrame.employeeListView();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Something went wrong");
         }

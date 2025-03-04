@@ -19,10 +19,11 @@ import model.EmployeeModel;
 
 public final class EmployeeListView extends JInternalFrame implements ActionListener {
 
-    JButton edit, delete, add;
+    JButton edit, delete, add, refresh;
     JPanel button_pane;
     JTable user_list;
     DefaultTableModel model;
+
     public EmployeeListView() {
         model = new DefaultTableModel(loadEmployeeRowData(), loadEmployeeColumn());
         // creating JTable object
@@ -30,6 +31,7 @@ public final class EmployeeListView extends JInternalFrame implements ActionList
         add = new JButton("Add Employee");
         edit = new JButton("Edit Employee");
         delete = new JButton("Delete Employee");
+        refresh = new JButton("Refresh");
         button_pane = new JPanel();
         // to make table scrollable
         JScrollPane scroll_bar = new JScrollPane(user_list);
@@ -40,7 +42,8 @@ public final class EmployeeListView extends JInternalFrame implements ActionList
         button_pane.add(add);
         button_pane.add(edit);
         button_pane.add(delete);
-        
+        button_pane.add(refresh);
+
         BorderLayout bl = new BorderLayout();
         add(scroll_bar, bl.CENTER);
         add(button_pane, bl.NORTH);
@@ -48,7 +51,8 @@ public final class EmployeeListView extends JInternalFrame implements ActionList
         edit.addActionListener(this);
         delete.addActionListener(this);
         add.addActionListener(this);
-        
+        refresh.addActionListener(this);
+
         setMaximizable(true);
         setClosable(true);
         setSize(500, 400);
@@ -91,10 +95,9 @@ public final class EmployeeListView extends JInternalFrame implements ActionList
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.add){
+        if (e.getSource() == this.add) {
             MainFrame.addEmployeeView();
-        }
-        else if (e.getSource() == this.edit) {
+        } else if (e.getSource() == this.edit) {
             if (user_list.getSelectedRow() < 0) {
                 JOptionPane.showMessageDialog(rootPane, "Please select employee first!");
                 return;
@@ -122,6 +125,9 @@ public final class EmployeeListView extends JInternalFrame implements ActionList
                     JOptionPane.showMessageDialog(rootPane, "Something went wrong");
                 }
             }
+        } else if (e.getSource() == this.refresh) {
+            model = new DefaultTableModel(loadEmployeeRowData(), loadEmployeeColumn());
+            user_list.setModel(model);
         }
     }
 }

@@ -4,9 +4,11 @@ import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import view.panel.BottomPanel;
@@ -54,22 +56,40 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     public static void employeeListView() {
+        disposeAllFrame();
         getUiManager();
         EmployeeListView ul = new EmployeeListView(); // is a JInternalFrame
         ul.setVisible(true);
+        try {
+            ul.setSelected(true);
+        } catch (PropertyVetoException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
         mp.add(ul);
     }
 
     public static void addEmployeeView() {
+        disposeAllFrame();
         getUiManager();
         AddEmployeeView au = new AddEmployeeView(); // is a JInternalFrame
         au.setVisible(true);
+        try {
+            au.setSelected(true);
+        } catch (PropertyVetoException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
         mp.add(au);
     }
 
     public static void loadEditEmployeeView(EditEmployeeView ev) {
+        disposeAllFrame();
         getUiManager();
         ev.setVisible(true);
+        try {
+            ev.setSelected(true);
+        } catch (PropertyVetoException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
         mp.add(ev);
     }
 
@@ -78,6 +98,15 @@ public class MainFrame extends JFrame implements ActionListener {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void disposeAllFrame() {
+        JInternalFrame[] frames = mp.getAllFrames();
+        for (JInternalFrame frame : frames) {
+            if (frame.isSelected()) {
+                frame.dispose();
+            }
         }
     }
 }
