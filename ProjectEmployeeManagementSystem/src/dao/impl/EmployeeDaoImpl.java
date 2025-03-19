@@ -93,7 +93,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 + "gender='" + em.getGender() + "', "
                 + "department_id=" + em.getDepartment().getDepartmentId() + ""
                 + " WHERE emp_no=" + em.getEmpNo();
-        System.out.println(query);
         if(connection.iudQueryBuilder(query) > 0){
             status = true;
         }

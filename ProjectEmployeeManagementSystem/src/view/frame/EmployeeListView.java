@@ -98,6 +98,7 @@ public final class EmployeeListView extends JInternalFrame implements ActionList
         if (e.getSource() == this.add) {
             MainFrame.addEmployeeView();
         } else if (e.getSource() == this.edit) {
+            // here it will check if the table row is selected or not
             if (user_list.getSelectedRow() < 0) {
                 JOptionPane.showMessageDialog(rootPane, "Please select employee first!");
                 return;
@@ -116,9 +117,12 @@ public final class EmployeeListView extends JInternalFrame implements ActionList
             EmployeeController ec = new EmployeeController();
             ec.emp_no = id;
             int input = JOptionPane.showConfirmDialog(rootPane, "Are you sure?");
+            // here this method returns either o or 1 or 2
+            // 0 = yes, 1= no & 2 = cancel
             if (input == 0) {
                 if (ec.delete(ec)) {
                     JOptionPane.showMessageDialog(rootPane, "Employee deleted successfully");
+                    // here the table model is reset with new request query
                     model = new DefaultTableModel(loadEmployeeRowData(), loadEmployeeColumn());
                     user_list.setModel(model);
                 } else {
