@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet-mapping>
+        <servlet-name>DemoHttpServletExample</servlet-name>
+        <url-pattern>/DemoHttpServletExample</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+    <servlet>
+        <servlet-name>DemoHttpServletExample</servlet-name>
+        <servlet-class>com.dav.edu.servletdemo.example.DemoHttpServletExample</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DemoHttpServletExample</servlet-name>
+        <url-pattern>/DemoHttpServletExample</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>first</servlet-name>
+        <servlet-class>com.dav.edu.servletdemo.example.FirstServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>first</servlet-name>
+        <url-pattern>/first</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>genericexample</servlet-name>
+        <servlet-class>com.dav.edu.servletdemo.example.GenericServletExample</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>genericexample</servlet-name>
+        <url-pattern>/generic</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>httpservletexample</servlet-name>
+        <servlet-class>com.dav.edu.servletdemo.exampole.HttpServletExample</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>httpservletexample</servlet-name>
+        <url-pattern>/httpservletexample</url-pattern>
+    </servlet-mapping>
+</web-app>
