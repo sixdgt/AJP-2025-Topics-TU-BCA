@@ -11,8 +11,40 @@
 	</head>
 	<body>
 		<main class="container">
+			<h3><a href="todo?action=list">Clear Action</a></h3>
 			<section class="card p-5 m-5">
-			
+			<% if(request.getParameter("action").equals("edit")){ %>
+				<h2 class="card-title">Update Task</h2>
+				<form method="post" action="todo?action=update">
+					<input type="hidden" name="id" value="<%= request.getAttribute("id") %>">
+					<div class="form-group">
+						<label for="title">Task Title:</label>
+						<input type="text" class="form-control" name="title" required value="<%= request.getAttribute("title") %>">
+					</div>
+					<div class="form-group">
+						<label for="title">Task Description:</label>
+						<input type="text" class="form-control" name="description" required value="<%= request.getAttribute("description") %>">
+					</div>
+					<div class="form-group">
+						<label for="title">Start Date: <%= request.getAttribute("start_date") %></label>
+						<input type="date" class="form-control" name="start_date" required>
+					</div>
+					<div class="form-group mb-2">
+						<label for="title">Due Date: <%= request.getAttribute("due_date") %></label>
+						<input type="date" class="form-control" name="due_date" required>
+					</div>
+					<div class="form-group">
+						<label>Task Status: <%= request.getAttribute("status") %></label>
+						
+						<select class="form-control" name="status">
+							<option value="in_progress">In Progress</option>
+							<option value="partial_complete">Partial Complete</option>
+							<option value="complete">Complete</option>
+						</select>
+					</div>
+					<input type="submit" class="btn btn-primary btn-sm mt-3" value="Update Task">
+				</form>
+			<% } else {%>
 				<h2 class="card-title">Add Task</h2>
 				<form method="post" action="todo?action=create">
 					<div class="form-group">
@@ -33,6 +65,7 @@
 					</div>
 					<input type="submit" class="btn btn-primary btn-sm mt-3" value="Add Task">
 				</form>
+			<% } %>
 			</section>
 			<section class="card">
 				
@@ -72,7 +105,6 @@
 									</tr>
 									<%
 									counter++;
-								
 								}
 							}
 						%>
