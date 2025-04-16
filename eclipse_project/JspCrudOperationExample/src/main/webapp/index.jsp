@@ -14,7 +14,7 @@
 			<section class="card p-5 m-5">
 			
 				<h2 class="card-title">Add Task</h2>
-				<form method="post" action="todo">
+				<form method="post" action="todo?action=create">
 					<div class="form-group">
 						<label for="title">Task Title:</label>
 						<input type="text" class="form-control" name="title" required>
@@ -67,8 +67,8 @@
 										<td><%= task[4] %></td>
 										<td><%= task[5] %></td>
 										<td><%= task[6] %></td>
-										<td><a href="<%= request.getContextPath() %>?id=<%= task[0] %>" class="btn btn-primary btn-sm">Edit</a></td>
-										<td><a href="<%= request.getContextPath() %>?id=<%= task[0] %>" class="btn btn-danger btn-sm">Delete</a></td>
+										<td><a href="todo?action=edit&id=<%= task[0] %>" class="btn btn-primary btn-sm">Edit</a></td>
+										<td><a href="todo?action=delete&id=<%= task[0] %>" class="btn btn-danger btn-sm">Delete</a></td>
 									</tr>
 									<%
 									counter++;

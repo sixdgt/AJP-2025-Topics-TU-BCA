@@ -35,6 +35,27 @@ public class ToDoListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String action = request.getParameter("action");
+		switch(action) {
+			case "list":
+				loadTask(request, response);
+				break;
+			case "create":
+				createTask(request, response);
+				break;
+		}
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
+	protected void loadTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jspcrud", "root", "1234");
@@ -64,12 +85,8 @@ public class ToDoListServlet extends HttpServlet {
 			System.out.println("Error: " + e.getMessage());
 		}
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
+	protected void createTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String title = request.getParameter("title");
 		String description = request.getParameter("description");
 		String start_date = request.getParameter("start_date");
@@ -86,8 +103,9 @@ public class ToDoListServlet extends HttpServlet {
 			} else {
 				request.setAttribute("failure", "Something went wrong!");
 			}
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+//			request.getRequestDispatcher("index.jsp").forward(request, response);
 			
+			loadTask(request, response);
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO: handle exception
 		}
