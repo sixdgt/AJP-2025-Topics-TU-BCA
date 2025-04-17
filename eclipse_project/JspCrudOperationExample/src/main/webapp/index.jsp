@@ -12,6 +12,16 @@
 	<body>
 		<main class="container">
 			<h3><a href="todo?action=list">Clear Action</a></h3>
+			<% if(request.getAttribute("success") != null){  %>
+			<div class="alert alert-success" role="alert">
+			  <%= request.getAttribute("success") %>
+			</div>
+			<% } %>
+			<% if(request.getAttribute("failure") != null){  %>
+			<div class="alert alert-danger" role="alert">
+			  <%= request.getAttribute("failure") %>
+			</div>
+			<% } %>
 			<section class="card p-5 m-5">
 			<% if(request.getParameter("action").equals("edit")){ %>
 				<h2 class="card-title">Update Task</h2>
@@ -68,7 +78,6 @@
 			<% } %>
 			</section>
 			<section class="card">
-				
 				<table class="table table-hover p-5">
 					<thead>
 						<tr>

@@ -49,6 +49,11 @@ public class ToDoListServlet extends HttpServlet {
 			case "update":
 				updateTask(request, response);
 				break;
+			case "delete":
+				deleteTask(request, response);
+				break;
+			default:
+				loadTask(request, response);
 					
 		}
 		
@@ -175,7 +180,26 @@ public class ToDoListServlet extends HttpServlet {
 							+ "where id=" + id;
 			int result = stmt.executeUpdate(query);
 			if(result > 0) {
-				request.setAttribute("success", "Task added successfully");
+				request.setAttribute("success", "Task updated successfully");
+			} else {
+				request.setAttribute("failure", "Something went wrong!");
+			}
+			loadTask(request, response);
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO: handle exception
+		}
+	}
+	
+	protected void deleteTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jspcrud", "root", "1234");
+			Statement stmt = con.createStatement();
+			int id = Integer.parseInt(request.getParameter("id"));
+			String query = "DELETE FROM task WHERE id=" + id;
+			int result = stmt.executeUpdate(query);
+			if(result > 0) {
+				request.setAttribute("success", "Task deleted successfully");
 			} else {
 				request.setAttribute("failure", "Something went wrong!");
 			}
