@@ -29,4 +29,8 @@ public class DbConnection {
         }
         return instance;
     }
+    
+    public static Connection getConnection() {
+    	return connection;
+    }
 }

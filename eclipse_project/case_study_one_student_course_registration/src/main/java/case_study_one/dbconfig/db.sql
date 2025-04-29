@@ -54,3 +54,8 @@ create table enroll(
     foreign key (student_id) references student(student_id),
     foreign key (course_id) references course(course_id)
 );
+
+desc student;
+desc course;
+desc admin;
+desc enroll;
