@@ -17,14 +17,14 @@ public class Student {
 	public void setStudentId(int student_id) {this.student_id = student_id;}
 	public int getStudentId() {return this.student_id;}
 	
-	public void setStundetFirstName(String first_name) {this.student_first_name = first_name;}
-	public String getStundetFirstName() {return this.student_first_name;}
+	public void setStudentFirstName(String first_name) {this.student_first_name = first_name;}
+	public String getStudentFirstName() {return this.student_first_name;}
 	
-	public void setStundetMiddleName(String middle_name) {this.student_middle_name = middle_name;}
-	public String getStundetMiddleName() {return this.student_middle_name;}
+	public void setStudentMiddleName(String middle_name) {this.student_middle_name = middle_name;}
+	public String getStudentMiddleName() {return this.student_middle_name;}
 	
-	public void setStundetLastName(String last_name) {this.student_last_name = last_name;}
-	public String getStundetLastName() {return this.student_last_name;}
+	public void setStudentLastName(String last_name) {this.student_last_name = last_name;}
+	public String getStudentLastName() {return this.student_last_name;}
 	
 	public void setAddress(String address) {this.address = address;}
 	public String getAddress() {return this.address;}

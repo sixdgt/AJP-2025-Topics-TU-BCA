@@ -1,58 +1,209 @@
 package case_study_one.dao.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import case_study_one.dao.StudentDao;
+import case_study_one.dbconfig.DbConnection;
+import case_study_one.model.Admin;
 import case_study_one.model.Student;
 
 public class StudentDaoImpl implements StudentDao{
-
+	DbConnection db;
 	@Override
 	public boolean login(Student student) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean status = false;
+		try {
+			db = DbConnection.getInstance();
+			String query = "SELECT * FROM student WHERE student_email=?";
+			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
+			stmt.setString(0, student.getStudentEmail());
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				if(rs.getString("student_email").equals(student.getStudentEmail()) && 
+						rs.getString("student_password").equals(student.getStudentPassword())) {
+					status = true;
+					break;
+				}
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 	@Override
 	public Student profile(Student student) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			db = DbConnection.getInstance();
+			String query = "SELECT * FROM student WHERE student_email=?";
+			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
+			stmt.setString(0, student.getStudentEmail());
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				student.setStudentId(rs.getInt("student_id"));
+				student.setStudentFirstName(rs.getString("student_first_name"));
+				student.setStudentMiddleName(rs.getString("student_middle_name"));;
+				student.setStudentLastName(rs.getString("student_last_name"));
+				student.setAddress(rs.getString("address"));
+				student.setProfileImg(rs.getString("profile_img"));
+				student.setGender(rs.getString("gender"));
+				student.setDob(rs.getString("dob"));
+				student.setStudentEmail(rs.getString("student_email"));
+				student.setStudentPassword(rs.getString("student_password"));
+				student.setIsRemoved(rs.getInt("is_removed"));
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return student;
 	}
 
 	@Override
 	public boolean update(Student student) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean status = false;
+		try {
+			db = DbConnection.getInstance();
+			String query = "UPDATE student set student_first_name=?, student_middle_name=?, student_last_name=?"
+					+ ", address=?, profile_img=?, gender=?, dob=?, student_email=? WHERE student_id=?";
+			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
+			stmt.setString(0, student.getStudentFirstName());
+			stmt.setString(1, student.getStudentMiddleName());
+			stmt.setString(2, student.getStudentLastName());
+			stmt.setString(3, student.getAddress());
+			stmt.setString(4, student.getProfileImg());
+			stmt.setString(5, student.getGender());
+			stmt.setString(6, student.getDob());
+			stmt.setString(7, student.getStudentEmail());
+			stmt.setString(8, student.getStudentPassword());
+			stmt.setInt(9, student.getStudentId());
+			if(stmt.executeUpdate() > 0) {
+				status = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 	@Override
 	public boolean changePassword(Student student) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean status = false;
+		try {
+			db = DbConnection.getInstance();
+			String query = "UPDATE student set student_password=? WHERE admin_id=?";
+			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
+			stmt.setString(0, student.getStudentPassword());
+			stmt.setInt(1, student.getStudentId());
+			if(stmt.executeUpdate() > 0) {
+				status = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 	@Override
 	public boolean create(Student student) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean status = false;
+		try {
+			db = DbConnection.getInstance();
+			String query = "INSERT INTO admin (`student_first_name`, `student_middle_name`, "
+					+ "`student_last_name`, `address`, `profile_img`, `gender`, `dob`, `student_email`, "
+					+ "`student_password`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
+			stmt.setString(0, student.getStudentFirstName());
+			stmt.setString(1, student.getStudentMiddleName());
+			stmt.setString(2, student.getStudentLastName());
+			stmt.setString(3, student.getAddress());
+			stmt.setString(4, student.getProfileImg());
+			stmt.setString(5, student.getGender());
+			stmt.setString(6, student.getDob());
+			stmt.setString(7, student.getStudentEmail());
+			stmt.setString(8, student.getStudentPassword());
+			if(stmt.executeUpdate() > 0) {
+				status = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 	@Override
 	public ArrayList<Student> select() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Student> data = new ArrayList<Student>();
+		try {
+			db = DbConnection.getInstance();
+			String query = "SELECT * FROM student";
+			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				Student student = new Student();
+				student.setStudentId(rs.getInt("student_id"));
+				student.setStudentFirstName(rs.getString("student_first_name"));
+				student.setStudentMiddleName(rs.getString("student_middle_name"));;
+				student.setStudentLastName(rs.getString("student_last_name"));
+				student.setAddress(rs.getString("address"));
+				student.setProfileImg(rs.getString("profile_img"));
+				student.setGender(rs.getString("gender"));
+				student.setDob(rs.getString("dob"));
+				student.setStudentEmail(rs.getString("student_email"));
+				student.setStudentPassword(rs.getString("student_password"));
+				student.setIsRemoved(rs.getInt("is_removed"));
+				data.add(student);
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return data;
 	}
 
 	@Override
 	public Student selectById(Student student) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			db = DbConnection.getInstance();
+			String query = "SELECT * FROM student WHERE student_id=?";
+			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
+			stmt.setInt(0, student.getStudentId());
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				student.setStudentId(rs.getInt("student_id"));
+				student.setStudentFirstName(rs.getString("student_first_name"));
+				student.setStudentMiddleName(rs.getString("student_middle_name"));;
+				student.setStudentLastName(rs.getString("student_last_name"));
+				student.setAddress(rs.getString("address"));
+				student.setProfileImg(rs.getString("profile_img"));
+				student.setGender(rs.getString("gender"));
+				student.setDob(rs.getString("dob"));
+				student.setStudentEmail(rs.getString("student_email"));
+				student.setStudentPassword(rs.getString("student_password"));
+				student.setIsRemoved(rs.getInt("is_removed"));
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return student;
 	}
 
 	@Override
 	public boolean delete(Student student) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean status = false;
+		try {
+			db = DbConnection.getInstance();
+			String query = "DELETE FROM student WHERE student_id=?";
+			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
+			stmt.setInt(0, student.getStudentId());
+			if(stmt.executeUpdate() > 0) {
+				status = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 	@Override

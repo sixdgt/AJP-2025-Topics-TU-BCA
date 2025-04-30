@@ -60,7 +60,7 @@ public class AdminDaoImpl implements AdminDao{
 		boolean status = false;
 		try {
 			db = DbConnection.getInstance();
-			String query = "UPDATE set admin_full_name=?, admin_email=? WHERE admin_id=?";
+			String query = "UPDATE admin set admin_full_name=?, admin_email=? WHERE admin_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
 			stmt.setString(0, admin.getAdminFullName());
 			stmt.setString(1, admin.getAdminEmail());
@@ -79,9 +79,9 @@ public class AdminDaoImpl implements AdminDao{
 		boolean status = false;
 		try {
 			db = DbConnection.getInstance();
-			String query = "UPDATE set admin_password=? WHERE admin_id=?";
+			String query = "UPDATE admin set admin_password=? WHERE admin_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, admin.getAdminFullName());
+			stmt.setString(0, admin.getAdminPassword());
 			stmt.setInt(1, admin.getAdminId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
