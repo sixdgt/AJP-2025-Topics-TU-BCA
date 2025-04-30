@@ -4,10 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import case_study_one.dao.StudentDao;
 import case_study_one.dbconfig.DbConnection;
-import case_study_one.model.Admin;
 import case_study_one.model.Student;
 
 public class StudentDaoImpl implements StudentDao{
