@@ -11,20 +11,18 @@ import case_study_one.model.Enroll;
 import case_study_one.model.Student;
 
 public class EnrollDaoImpl implements EnrollDao{
-	DbConnection db;
 	@Override
 	public boolean update(Enroll enroll) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "UPDATE enroll set student_id=?, course_id=?, enrolled_at=?"
 					+ ", enroll_status=? WHERE enroll_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, enroll.getStudent().getStudentId());
-			stmt.setInt(1, enroll.getCourse().getCourseId());
-			stmt.setString(2, enroll.getEnrolledAt());
-			stmt.setInt(3, enroll.getEnrollStatus());
-			stmt.setInt(4, enroll.getEnrollId());
+			stmt.setInt(1, enroll.getStudent().getStudentId());
+		    stmt.setInt(2, enroll.getCourse().getCourseId());
+		    stmt.setString(3, enroll.getEnrolledAt());
+		    stmt.setInt(4, enroll.getEnrollStatus());
+		    stmt.setInt(5, enroll.getEnrollId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -38,13 +36,12 @@ public class EnrollDaoImpl implements EnrollDao{
 	public boolean create(Enroll enroll) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
-			String query = "INSERT INTO course (`student_id`, `course_id`, `enrolled_at`, `enroll_status`) VALUES(?, ?, ?, ?)";
+			String query = "INSERT INTO enroll (`student_id`, `course_id`, `enrolled_at`, `enroll_status`) VALUES(?, ?, ?, ?)";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, enroll.getStudent().getStudentId());
-			stmt.setInt(1, enroll.getCourse().getCourseId());
-			stmt.setString(2, enroll.getEnrolledAt());
-			stmt.setInt(3, enroll.getEnrollStatus());
+			stmt.setInt(1, enroll.getStudent().getStudentId());
+	        stmt.setInt(2, enroll.getCourse().getCourseId());
+	        stmt.setString(3, enroll.getEnrolledAt());
+	        stmt.setInt(4, enroll.getEnrollStatus());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -58,7 +55,6 @@ public class EnrollDaoImpl implements EnrollDao{
 	public ArrayList<Enroll> select() {
 		ArrayList<Enroll> data = new ArrayList<Enroll>();
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM enroll INNER JOIN course ON course.course_id=enroll.course_id "
 					+ "INNER JOIN student ON student.student_id=enroll.student_id";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
@@ -103,11 +99,10 @@ public class EnrollDaoImpl implements EnrollDao{
 	@Override
 	public Enroll selectById(Enroll enroll) {
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM enroll INNER JOIN course ON course.course_id=enroll.course_id "
 					+ "INNER JOIN student ON student.student_id=enroll.student_id WHERE enroll_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, enroll.getEnrollId());
+			stmt.setInt(1, enroll.getEnrollId());
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				Course course = new Course();
@@ -147,10 +142,9 @@ public class EnrollDaoImpl implements EnrollDao{
 	public boolean delete(Enroll enroll) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "DELETE FROM enroll WHERE enroll_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, enroll.getEnrollId());
+			stmt.setInt(1, enroll.getEnrollId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}

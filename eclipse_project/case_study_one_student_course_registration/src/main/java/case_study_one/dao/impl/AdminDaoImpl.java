@@ -9,16 +9,14 @@ import case_study_one.dbconfig.DbConnection;
 import case_study_one.model.Admin;
 
 public class AdminDaoImpl implements AdminDao{
-	DbConnection db;
-	
+
 	@Override
 	public boolean login(Admin admin) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM admin WHERE admin_email=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, admin.getAdminEmail());
+			stmt.setString(1, admin.getAdminEmail());
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				if(rs.getString("admin_email").equals(admin.getAdminEmail()) && 
@@ -36,10 +34,9 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public Admin profile(Admin admin) {
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM admin WHERE admin_email=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, admin.getAdminEmail());
+			stmt.setString(1, admin.getAdminEmail());
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				admin.setAdminId(rs.getInt("admin_id"));
@@ -58,12 +55,11 @@ public class AdminDaoImpl implements AdminDao{
 	public boolean update(Admin admin) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "UPDATE admin set admin_full_name=?, admin_email=? WHERE admin_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, admin.getAdminFullName());
-			stmt.setString(1, admin.getAdminEmail());
-			stmt.setInt(2, admin.getAdminId());
+			stmt.setString(1, admin.getAdminFullName());
+			stmt.setString(2, admin.getAdminEmail());
+			stmt.setInt(3, admin.getAdminId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -77,11 +73,10 @@ public class AdminDaoImpl implements AdminDao{
 	public boolean changePassword(Admin admin) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "UPDATE admin set admin_password=? WHERE admin_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, admin.getAdminPassword());
-			stmt.setInt(1, admin.getAdminId());
+			stmt.setString(1, admin.getAdminPassword());
+			stmt.setInt(2, admin.getAdminId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -95,12 +90,11 @@ public class AdminDaoImpl implements AdminDao{
 	public boolean create(Admin admin) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "INSERT INTO admin (`admin_full_name`, `admin_email`, `admin_password`) VALUES(?, ?, ?)";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, admin.getAdminFullName());
-			stmt.setString(1, admin.getAdminEmail());
-			stmt.setString(2, admin.getAdminPassword());
+			stmt.setString(1, admin.getAdminFullName());
+			stmt.setString(2, admin.getAdminEmail());
+			stmt.setString(3, admin.getAdminPassword());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -114,7 +108,6 @@ public class AdminDaoImpl implements AdminDao{
 	public ArrayList<Admin> select() {
 		ArrayList<Admin> data = new ArrayList<Admin>();
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM admin";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
 			ResultSet rs = stmt.executeQuery();
@@ -136,10 +129,9 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public Admin selectById(Admin admin) {
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM admin WHERE admin_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, admin.getAdminId());
+			stmt.setInt(1, admin.getAdminId());
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				admin.setAdminId(rs.getInt("admin_id"));
@@ -158,10 +150,9 @@ public class AdminDaoImpl implements AdminDao{
 	public boolean delete(Admin admin) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "DELETE FROM admin WHERE admin_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, admin.getAdminId());
+			stmt.setInt(1, admin.getAdminId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}

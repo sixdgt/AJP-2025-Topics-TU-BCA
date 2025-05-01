@@ -9,15 +9,14 @@ import case_study_one.dbconfig.DbConnection;
 import case_study_one.model.Student;
 
 public class StudentDaoImpl implements StudentDao{
-	DbConnection db;
+
 	@Override
 	public boolean login(Student student) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM student WHERE student_email=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, student.getStudentEmail());
+			stmt.setString(1, student.getStudentEmail());
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				if(rs.getString("student_email").equals(student.getStudentEmail()) && 
@@ -35,10 +34,9 @@ public class StudentDaoImpl implements StudentDao{
 	@Override
 	public Student profile(Student student) {
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM student WHERE student_email=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, student.getStudentEmail());
+			stmt.setString(1, student.getStudentEmail());
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				student.setStudentId(rs.getInt("student_id"));
@@ -63,20 +61,19 @@ public class StudentDaoImpl implements StudentDao{
 	public boolean update(Student student) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "UPDATE student set student_first_name=?, student_middle_name=?, student_last_name=?"
 					+ ", address=?, profile_img=?, gender=?, dob=?, student_email=? WHERE student_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, student.getStudentFirstName());
-			stmt.setString(1, student.getStudentMiddleName());
-			stmt.setString(2, student.getStudentLastName());
-			stmt.setString(3, student.getAddress());
-			stmt.setString(4, student.getProfileImg());
-			stmt.setString(5, student.getGender());
-			stmt.setString(6, student.getDob());
-			stmt.setString(7, student.getStudentEmail());
-			stmt.setString(8, student.getStudentPassword());
-			stmt.setInt(9, student.getStudentId());
+			stmt.setString(1, student.getStudentFirstName());
+			stmt.setString(2, student.getStudentMiddleName());
+			stmt.setString(3, student.getStudentLastName());
+			stmt.setString(4, student.getAddress());
+			stmt.setString(5, student.getProfileImg());
+			stmt.setString(6, student.getGender());
+			stmt.setString(7, student.getDob());
+			stmt.setString(8, student.getStudentEmail());
+			stmt.setString(9, student.getStudentPassword());
+			stmt.setInt(10, student.getStudentId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -90,11 +87,10 @@ public class StudentDaoImpl implements StudentDao{
 	public boolean changePassword(Student student) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "UPDATE student set student_password=? WHERE admin_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, student.getStudentPassword());
-			stmt.setInt(1, student.getStudentId());
+			stmt.setString(1, student.getStudentPassword());
+			stmt.setInt(2, student.getStudentId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -108,20 +104,19 @@ public class StudentDaoImpl implements StudentDao{
 	public boolean create(Student student) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "INSERT INTO admin (`student_first_name`, `student_middle_name`, "
 					+ "`student_last_name`, `address`, `profile_img`, `gender`, `dob`, `student_email`, "
 					+ "`student_password`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, student.getStudentFirstName());
-			stmt.setString(1, student.getStudentMiddleName());
-			stmt.setString(2, student.getStudentLastName());
-			stmt.setString(3, student.getAddress());
-			stmt.setString(4, student.getProfileImg());
-			stmt.setString(5, student.getGender());
-			stmt.setString(6, student.getDob());
-			stmt.setString(7, student.getStudentEmail());
-			stmt.setString(8, student.getStudentPassword());
+			stmt.setString(1, student.getStudentFirstName());
+			stmt.setString(2, student.getStudentMiddleName());
+			stmt.setString(3, student.getStudentLastName());
+			stmt.setString(4, student.getAddress());
+			stmt.setString(5, student.getProfileImg());
+			stmt.setString(6, student.getGender());
+			stmt.setString(7, student.getDob());
+			stmt.setString(8, student.getStudentEmail());
+			stmt.setString(9, student.getStudentPassword());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -135,7 +130,6 @@ public class StudentDaoImpl implements StudentDao{
 	public ArrayList<Student> select() {
 		ArrayList<Student> data = new ArrayList<Student>();
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM student";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
 			ResultSet rs = stmt.executeQuery();
@@ -163,10 +157,9 @@ public class StudentDaoImpl implements StudentDao{
 	@Override
 	public Student selectById(Student student) {
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM student WHERE student_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, student.getStudentId());
+			stmt.setInt(1, student.getStudentId());
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				student.setStudentId(rs.getInt("student_id"));
@@ -191,10 +184,9 @@ public class StudentDaoImpl implements StudentDao{
 	public boolean delete(Student student) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "DELETE FROM student WHERE student_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, student.getStudentId());
+			stmt.setInt(1, student.getStudentId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}

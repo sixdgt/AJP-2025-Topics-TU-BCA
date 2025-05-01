@@ -10,23 +10,22 @@ import case_study_one.model.Admin;
 import case_study_one.model.Course;
 
 public class CourseDaoImpl implements CourseDao{
-	DbConnection db;
+
 	@Override
 	public boolean update(Course course) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "UPDATE course set course_code=?, course_title=?, course_desc=?"
 					+ ", course_start=?, course_end=?, admin_id=?, course_category=? WHERE course_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, course.getCourseCode());
-			stmt.setString(1, course.getCourseTitle());
-			stmt.setString(2, course.getCourseDesc());
-			stmt.setString(3, course.getCourseStart());
-			stmt.setString(4, course.getCourseEnd());
-			stmt.setInt(5, course.getAdmin().getAdminId());
-			stmt.setString(6, course.getCourseCategory());
-			stmt.setInt(7, course.getCourseId());
+			stmt.setString(1, course.getCourseCode());
+			stmt.setString(2, course.getCourseTitle());
+			stmt.setString(3, course.getCourseDesc());
+			stmt.setString(4, course.getCourseStart());
+			stmt.setString(5, course.getCourseEnd());
+			stmt.setInt(6, course.getAdmin().getAdminId());
+			stmt.setString(7, course.getCourseCategory());
+			stmt.setInt(8, course.getCourseId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -40,17 +39,16 @@ public class CourseDaoImpl implements CourseDao{
 	public boolean create(Course course) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "INSERT INTO course (`course_code`, `course_title`, `course_desc`, `course_start`,"
 					+ " `course_end`, `admin_id`, `course_category`) VALUES(?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setString(0, course.getCourseCode());
-			stmt.setString(1, course.getCourseTitle());
-			stmt.setString(2, course.getCourseDesc());
-			stmt.setString(3, course.getCourseStart());
-			stmt.setString(4, course.getCourseEnd());
-			stmt.setInt(5, course.getAdmin().getAdminId());
-			stmt.setString(6, course.getCourseCategory());
+			stmt.setString(1, course.getCourseCode());
+			stmt.setString(2, course.getCourseTitle());
+			stmt.setString(3, course.getCourseDesc());
+			stmt.setString(4, course.getCourseStart());
+			stmt.setString(5, course.getCourseEnd());
+			stmt.setInt(6, course.getAdmin().getAdminId());
+			stmt.setString(7, course.getCourseCategory());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
@@ -64,7 +62,6 @@ public class CourseDaoImpl implements CourseDao{
 	public ArrayList<Course> select() {
 		ArrayList<Course> data = new ArrayList<Course>();
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM course INNER JOIN admin ON admin.admin_id=course.admin_id";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
 			
@@ -95,10 +92,9 @@ public class CourseDaoImpl implements CourseDao{
 	@Override
 	public Course selectById(Course course) {
 		try {
-			db = DbConnection.getInstance();
 			String query = "SELECT * FROM course INNER JOIN admin ON admin.admin_id=course.admin_id WHERE course_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, course.getCourseId());
+			stmt.setInt(1, course.getCourseId());
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				Admin admin = new Admin();
@@ -125,10 +121,9 @@ public class CourseDaoImpl implements CourseDao{
 	public boolean delete(Course course) {
 		boolean status = false;
 		try {
-			db = DbConnection.getInstance();
 			String query = "DELETE FROM course WHERE course_id=?";
 			PreparedStatement stmt = DbConnection.getConnection().prepareStatement(query);
-			stmt.setInt(0, course.getCourseId());
+			stmt.setInt(1, course.getCourseId());
 			if(stmt.executeUpdate() > 0) {
 				status = true;
 			}
