@@ -3,7 +3,6 @@ package case_study_one.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import case_study_one.dao.StudentDao;
 import case_study_one.dao.impl.StudentDaoImpl;
 import case_study_one.model.Student;
@@ -78,7 +77,7 @@ public class StudentController {
 		return status;
 	}
 	
-	public boolean addstudent(Map<String, String> data) {
+	public boolean addStudent(Map<String, String> data) {
 		boolean status = false;
 		student = new Student();
 		student.setStudentId(Integer.parseInt(data.get("student_id")));
@@ -98,7 +97,7 @@ public class StudentController {
 		return status;
 	}
 	
-	public Map<Integer, Map<String, String>> getAllstudent(){
+	public Map<Integer, Map<String, String>> getAllStudent(){
 		ArrayList<Student> data = student_dao.select();
 		Map<String, String> student_data = new HashMap<>();
 		Map<Integer, Map<String, String>> all_student = new HashMap<>();
@@ -121,7 +120,7 @@ public class StudentController {
 		return all_student;
 	}
 	
-	public Map<String, String> getstudent(int id){
+	public Map<String, String> getStudent(int id){
 		student = new Student();
 		student.setStudentId(id);
 		student = student_dao.selectById(student);
@@ -140,7 +139,7 @@ public class StudentController {
 		return data;
 	}
 	
-	public boolean removestudent(int id) {
+	public boolean removeStudent(int id) {
 		boolean status = false;
 		student = new Student();
 		student.setStudentId(id);
