@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import case_study_one.dao.AdminDao;
 import case_study_one.dbconfig.DbConnection;
 import case_study_one.model.Admin;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class AdminDaoImpl implements AdminDao{
 
@@ -20,7 +21,7 @@ public class AdminDaoImpl implements AdminDao{
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				if(rs.getString("admin_email").equals(admin.getAdminEmail()) && 
-						rs.getString("admin_password").equals(admin.getAdminPassword())) {
+						BCrypt.checkpw(admin.getAdminPassword(), rs.getString("admin_password"))) {
 					status = true;
 					break;
 				}

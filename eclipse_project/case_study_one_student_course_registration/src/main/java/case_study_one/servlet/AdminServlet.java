@@ -4,18 +4,13 @@ import case_study_one.controller.AdminController;
 import case_study_one.controller.CourseController;
 import case_study_one.controller.EnrollController;
 import case_study_one.controller.StudentController;
-import case_study_one.model.Course;
-import case_study_one.model.Enroll;
-import case_study_one.model.Student;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -69,25 +64,25 @@ public class AdminServlet extends HttpServlet {
             request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);
         } else {
             switch (action) {
-                case "viewStudents":
+                case "view-students":
                     // View all students
                     request.setAttribute("students", studentController.getAllStudent());
                     request.getRequestDispatcher("view-students.jsp").forward(request, response);
                     break;
-                case "viewCourses":
+                case "view-courses":
                     // View all courses
                     request.setAttribute("courses", courseController.getAllCourse());
                     request.getRequestDispatcher("view-courses.jsp").forward(request, response);
                     break;
-                case "addStudent":
+                case "add-student":
                     // Show add student page
                     request.getRequestDispatcher("add-student.jsp").forward(request, response);
                     break;
-                case "addCourse":
+                case "add-course":
                     // Show add course page
                     request.getRequestDispatcher("add-course.jsp").forward(request, response);
                     break;
-                case "enrollStudent":
+                case "enroll-student":
                     // Show enroll student in course page
                     request.setAttribute("students", studentController.getAllStudent());
                     request.setAttribute("courses", courseController.getAllCourse());

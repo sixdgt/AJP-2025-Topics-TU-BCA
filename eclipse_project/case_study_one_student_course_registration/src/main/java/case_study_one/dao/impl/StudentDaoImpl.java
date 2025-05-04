@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import org.mindrot.jbcrypt.BCrypt;
 import case_study_one.dao.StudentDao;
 import case_study_one.dbconfig.DbConnection;
 import case_study_one.model.Student;
@@ -20,7 +21,7 @@ public class StudentDaoImpl implements StudentDao{
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				if(rs.getString("student_email").equals(student.getStudentEmail()) && 
-						rs.getString("student_password").equals(student.getStudentPassword())) {
+						BCrypt.checkpw(student.getStudentPassword(), rs.getString("student_password"))) {
 					status = true;
 					break;
 				}

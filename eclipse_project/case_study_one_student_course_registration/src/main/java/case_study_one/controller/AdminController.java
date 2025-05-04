@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import case_study_one.dao.AdminDao;
 import case_study_one.dao.impl.AdminDaoImpl;
 import case_study_one.model.Admin;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class AdminController {
 	private AdminDao admin_dao;
@@ -66,7 +67,7 @@ public class AdminController {
 		admin = new Admin();
 		admin.setAdminEmail(data.get("email"));
 		admin.setAdminFullName(data.get("full_name"));
-		admin.setAdminPassword(data.get("password"));
+		admin.setAdminPassword(BCrypt.hashpw(data.get("password"), BCrypt.gensalt()));
 		if(this.admin_dao.create(admin)) {
 			status = true;
 		}

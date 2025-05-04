@@ -3,6 +3,9 @@ package case_study_one.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.mindrot.jbcrypt.BCrypt;
+
 import case_study_one.dao.StudentDao;
 import case_study_one.dao.impl.StudentDaoImpl;
 import case_study_one.model.Student;
@@ -89,7 +92,7 @@ public class StudentController {
 		student.setGender(data.get("gender"));
 		student.setDob(data.get("dob"));
 		student.setStudentEmail(data.get("student_email"));
-		student.setStudentPassword(data.get("student_password"));
+		student.setStudentPassword(BCrypt.hashpw(data.get("student_password"), BCrypt.gensalt()));
 		student.setIsRemoved(Integer.parseInt(data.get("is_removed")));
 		if(this.student_dao.create(student)) {
 			status = true;
