@@ -45,34 +45,23 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String new_password = request.getParameter("new_password");
+        String current_password = request.getParameter("current_password");
 
         String role = request.getParameter("role"); // admin or student
 
-        boolean loginSuccess = false;
-
+        HttpSession session = request.getSession();
         if ("admin".equals(role)) {
-            Admin admin = new Admin();
-            admin.setAdminEmail(email);
-            admin.setAdminPassword(password);
-            loginSuccess = adminController.doLogin(email, password);
-        } else if ("student".equals(role)) {
-            Student student = new Student();
-            student.setStudentEmail(email);
-            student.setStudentPassword(password);
-            loginSuccess = studentController.doLogin(email, password);
-        }
-
-        if (loginSuccess) {
-            // Create session for the logged-in user
-            HttpSession session = request.getSession();
-            session.setAttribute("email", email);
-            session.setAttribute("role", role);
-
-            if ("admin".equals(role)) {
+            if(adminController.doLogin(email, new_password, current_password)) {
+            	session.setAttribute("email", email);
+                session.setAttribute("role", role);
                 response.sendRedirect("admin-dashboard.jsp");
-            } else if ("student".equals(role)) {
-                response.sendRedirect("student-dashboard.jsp");
+            }
+        } else if ("student".equals(role)) {
+            if(studentController.doLogin(email, new_password, current_password)) {
+            	session.setAttribute("email", email);
+                session.setAttribute("role", role);
+            	response.sendRedirect("student-dashboard.jsp");
             }
         } else {
             // If login fails, redirect to login page with error message

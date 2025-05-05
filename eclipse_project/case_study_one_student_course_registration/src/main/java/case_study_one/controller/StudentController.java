@@ -3,12 +3,10 @@ package case_study_one.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.mindrot.jbcrypt.BCrypt;
-
 import case_study_one.dao.StudentDao;
 import case_study_one.dao.impl.StudentDaoImpl;
 import case_study_one.model.Student;
+import org.mindrot.jbcrypt.BCrypt; // Bcrypt Hash Library
 
 public class StudentController {
 	private StudentDao student_dao;
@@ -18,14 +16,21 @@ public class StudentController {
 		this.student_dao = new StudentDaoImpl();
 	}
 	
-	public boolean doLogin(String email, String password) {
+	public boolean doLogin(String email, String new_password, String current_pass) {
 		boolean status = false;
-		student = new Student();
-		student.setStudentEmail(email);
-		student.setStudentPassword(password);
-		if(this.student_dao.login(student)) {
-			status = false;
-		}
+		Map<String, String> admin_data = getProfile(email);
+		String db_hash_pass = admin_data.get("password");
+		// checking hash of current password
+		if(BCrypt.checkpw(current_pass, db_hash_pass)) {
+			// creating hash of new password
+			String new_hash_pass = BCrypt.hashpw(new_password, BCrypt.gensalt());
+			student = new Student();
+			student.setStudentEmail(email);
+			student.setStudentPassword(new_hash_pass);
+			if(this.student_dao.login(student)) {
+				status = true;
+			}
+		} 	
 		return status;
 	}
 	
@@ -74,6 +79,9 @@ public class StudentController {
 		student.setStudentId(Integer.parseInt(data.get("student_id")));
 		student.setStudentEmail(data.get("email"));
 		student.setStudentPassword(data.get("password"));
+		// check hash of current password
+		// if true then create hash of new password
+		// and send new hash password to dao i.e database
 		if(this.student_dao.changePassword(student)) {
 			status = true;
 		}

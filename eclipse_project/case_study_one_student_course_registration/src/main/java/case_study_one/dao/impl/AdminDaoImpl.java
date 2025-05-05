@@ -21,6 +21,8 @@ public class AdminDaoImpl implements AdminDao{
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				if(rs.getString("admin_email").equals(admin.getAdminEmail()) && 
+						// 1st param: plain password
+						// 2nd param: hash password (db)
 						BCrypt.checkpw(admin.getAdminPassword(), rs.getString("admin_password"))) {
 					status = true;
 					break;
