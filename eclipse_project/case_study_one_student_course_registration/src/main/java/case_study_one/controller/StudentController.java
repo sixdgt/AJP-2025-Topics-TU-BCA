@@ -18,8 +18,8 @@ public class StudentController {
 	
 	public boolean doLogin(String email, String new_password, String current_pass) {
 		boolean status = false;
-		Map<String, String> admin_data = getProfile(email);
-		String db_hash_pass = admin_data.get("password");
+		Map<String, String> student_data = getProfile(email);
+		String db_hash_pass = student_data.get("password");
 		// checking hash of current password
 		if(BCrypt.checkpw(current_pass, db_hash_pass)) {
 			// creating hash of new password
