@@ -16,20 +16,13 @@ public class AdminController {
 		this.admin_dao = new AdminDaoImpl();
 	}
 	
-	public boolean doLogin(String email, String new_password, String current_pass) {
+	public boolean doLogin(String email, String password) {
 		boolean status = false;
-		Map<String, String> admin_data = getProfile(email);
-		String db_hash_pass = admin_data.get("password");
-		// checking hash of current password
-		if(BCrypt.checkpw(current_pass, db_hash_pass)) {
-			// creating hash of new password
-			String new_hash_pass = BCrypt.hashpw(new_password, BCrypt.gensalt());
-			admin = new Admin();
-			admin.setAdminEmail(email);
-			admin.setAdminPassword(new_hash_pass);
-			if(this.admin_dao.login(admin)) {
-				status = true;
-			}
+		admin = new Admin();
+		admin.setAdminEmail(email);
+		admin.setAdminPassword(password);
+		if(this.admin_dao.login(admin)) {
+			status = true;
 		} 		
 		return status;
 	}
@@ -60,13 +53,19 @@ public class AdminController {
 	
 	public boolean changeAdminPassword(Map<String, String> data) {
 		boolean status = false;
-		admin = new Admin();
-		admin.setAdminId(Integer.parseInt(data.get("admin_id")));
-		admin.setAdminEmail(data.get("email"));
-		admin.setAdminPassword(data.get("password"));
-		if(this.admin_dao.changePassword(admin)) {
-			status = true;
-		}
+		Map<String, String> admin_data = getProfile(data.get("email"));
+		String db_hash_pass = admin_data.get("password");
+		// checking hash of current password
+		if(BCrypt.checkpw(data.get("current_password"), db_hash_pass)) {
+			// creating hash of new password
+			String new_hash_pass = BCrypt.hashpw(data.get("new_password"), BCrypt.gensalt());
+			admin = new Admin();
+			admin.setAdminEmail(admin_data.get("admin_email"));
+			admin.setAdminPassword(new_hash_pass);
+			if(this.admin_dao.login(admin)) {
+				status = true;
+			}
+		} 	
 		return status;
 	}
 	

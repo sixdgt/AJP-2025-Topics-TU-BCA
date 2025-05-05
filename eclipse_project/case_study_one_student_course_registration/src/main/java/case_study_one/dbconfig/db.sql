@@ -59,3 +59,11 @@ desc student;
 desc course;
 desc admin;
 desc enroll;
+
+select * from course 
+inner join admin on admin.admin_id = course.admin_id
+where course_id = 1;
+
+SELECT * FROM enroll INNER JOIN course ON course.course_id=enroll.course_id INNER JOIN student ON student.student_id=enroll.student_id;
+
+insert into admin(admin_full_name, admin_email, admin_password) values("Super Admin", "admin@scr.com", "$2a$10$xbGYSa2CdaUdaf.gD7/DreURnTj7.y/bX6dOnLiz3TVDQ2IFUIb1C");

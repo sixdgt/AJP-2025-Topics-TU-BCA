@@ -1,7 +1,5 @@
 package case_study_one.servlet;
 
-import case_study_one.model.Admin;
-import case_study_one.model.Student;
 import case_study_one.controller.AdminController;
 import case_study_one.controller.StudentController;
 import jakarta.servlet.ServletException;
@@ -45,27 +43,30 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
-        String new_password = request.getParameter("new_password");
-        String current_password = request.getParameter("current_password");
-
+        String password = request.getParameter("password");
         String role = request.getParameter("role"); // admin or student
 
         HttpSession session = request.getSession();
         if ("admin".equals(role)) {
-            if(adminController.doLogin(email, new_password, current_password)) {
+            if(adminController.doLogin(email, password)) {
             	session.setAttribute("email", email);
                 session.setAttribute("role", role);
-                response.sendRedirect("admin-dashboard.jsp");
+//                request.getRequestDispatcher("pages/admin/dashboard.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/admin?action=null");
+            } else {
+            	response.sendRedirect(request.getContextPath() + "/login?error=invalid_credentials");
             }
         } else if ("student".equals(role)) {
-            if(studentController.doLogin(email, new_password, current_password)) {
+            if(studentController.doLogin(email, password)) {
             	session.setAttribute("email", email);
                 session.setAttribute("role", role);
-            	response.sendRedirect("student-dashboard.jsp");
+            	response.sendRedirect(request.getContextPath() + "/student?action=");
+            }else {
+            	response.sendRedirect(request.getContextPath() + "/login?error=invalid_credentials");
             }
         } else {
             // If login fails, redirect to login page with error message
-            response.sendRedirect("pages/login.jsp?error=invalid_credentials");
+            response.sendRedirect(request.getContextPath() + "/login?error=invalid_credentials");
         }
 	}
 

@@ -33,7 +33,7 @@
 	    <div class="card text-bg-dark mt-4">
 		  <img src="https://sites.newpaltz.edu/news/wp-content/uploads/sites/24/2020/05/MyPlan_Amy-Zheng-scaled.jpg" class="card-img" alt="">
 		  <div class="card-img-overlay">
-		    <h5 class="card-title">Card title</h5>
+		    <h5 class="card-title"></h5>
 		    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 		    <p class="card-text"><small>Last updated 3 mins ago</small></p>
 		  </div>

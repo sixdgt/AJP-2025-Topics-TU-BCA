@@ -27,7 +27,7 @@ import java.util.Map;
 	    maxRequestSize = 1024 * 1024 * 50    // 50MB
 	)
 
-@WebServlet("/AdminServlet")
+@WebServlet("/admin")
 public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AdminController adminController;
@@ -61,7 +61,7 @@ public class AdminServlet extends HttpServlet {
 
         if (action == null) {
             // Default view: Show dashboard
-            request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);
+            request.getRequestDispatcher("pages/admin/dashboard.jsp").forward(request, response);
         } else {
             switch (action) {
                 case "view-students":
@@ -90,7 +90,7 @@ public class AdminServlet extends HttpServlet {
                     break;
                 default:
                     // Default action, show admin dashboard
-                    request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);
+                    request.getRequestDispatcher("pages/admin/dashboard.jsp").forward(request, response);
                     break;
             }
         }

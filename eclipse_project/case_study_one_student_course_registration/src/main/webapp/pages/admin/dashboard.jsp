@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="jakarta.servlet.http.*, jakarta.servlet.*" %>
 <%
-    if (session == null || session.getAttribute("admin") == null) {
-        response.sendRedirect("login");
+    if (session == null || session.getAttribute("role") == null ) {
+        response.sendRedirect(request.getContextPath() + "/login?action=access-denied");
         return;
     }
 %>
@@ -17,7 +17,7 @@
 <body>
 
 <div class="container mt-4">
-    <h3>Welcome, <%= session.getAttribute("user") %>!</h3>
+    <h3>Welcome, <%= session.getAttribute("email") %>!</h3>
     <p>This is your dashboard.</p>
 </div>
 
