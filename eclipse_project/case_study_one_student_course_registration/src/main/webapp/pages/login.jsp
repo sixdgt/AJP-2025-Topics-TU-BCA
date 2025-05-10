@@ -57,7 +57,7 @@
 		</div>
     </main>
     <!-- Bootstrap 5 Footer -->
-	<footer class="bg-dark text-white pt-4 pb-2 mt-5">
+	<footer class="bg-dark fixed-bottom text-white pt-4 pb-2 mt-5">
 	  <div class="container">
 	    <div class="row">
 	
