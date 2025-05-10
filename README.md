@@ -14,6 +14,47 @@ This repository includes a **Project Management System**, designed using:
 - **DAO (Data Access Object)** pattern for efficient database interactions
 - **Singleton Design Pattern** for controlled instance creation
 - **JDBC (Java Database Connectivity)** for database operations
+- 
+## CASE STUDY: Build a web-based application where students can register, log in, view available courses, enroll in them, and manage their enrollment. Admins can manage courses and view registered students.
+Modules and Features:
+1. Authentication Module (Login/Signup):
+Students and Admins can register and log in.
+Use Sessions to maintain logged-in state.
+Use Cookies to remember login details (optional “Remember Me” functionality).
+
+2. Dashboard:
+Redirect to student dashboard or admin dashboard after login based on role.
+Use Page Redirection (e.g., response.sendRedirect() or <jsp:forward>).
+
+3. Student Functionalities:
+View list of available courses.
+Enroll in courses (Many-to-Many relationship: Students ↔ Courses).
+View enrolled courses.
+Update or delete enrollment.
+
+4. Admin Functionalities:
+CRUD operations on courses:
+Add new course.
+Update course details.
+Delete a course.
+View list of all courses.
+View students enrolled in each course
+
+Feature & Concept Used
+Login / Logout: Session Management
+JBcryt: Hashing & Checking Password
+Remember Me: Cookies Handling
+Redirect after Login: Page Redirection
+Course Management: CRUD using JDBC
+Enroll in Courses: CRUD + Many-to-Many Relationship
+Logout Functionality: Session Invalidation
+
+Technologies Used:
+Java Servlet API
+JSP (Java Server Pages)
+JDBC with MySQL
+HTML/CSS/Bootstrap (optional for UI)
+MVC Architecture (Servlet as Controller, JSP as View)
 
 ## Dependencies
 The project utilizes the following external libraries:
