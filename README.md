@@ -60,6 +60,7 @@ MVC Architecture (Servlet as Controller, JSP as View)
 The project utilizes the following external libraries:
 - **MySQL Connector JAR:** Required for connecting Java applications to a MySQL database.
 - **FlatLaf JAR:** A modern look-and-feel library for Java Swing applications.
+- **jBCyrpt JAR:** jBCrypt is a Java™ implementation of OpenBSD's Blowfish password hashing code, as described in "A Future-Adaptable Password Scheme" by Niels Provos and David Mazières.
 
 ## How to Run the Project
 1. Ensure you have **Java 8 or later** installed.
